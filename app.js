@@ -33,8 +33,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const localDb = "mongodb://localhost:27017/userDB";
+const cloudUrl = process.env.DBURL;
 //connect to monogodb database using mongoose
-mongoose.connect("mongodb://localhost:27017/userDB");
+mongoose.connect(cloudUrl);
 
 //schema for user
 const userSchema = new mongoose.Schema(
@@ -70,7 +72,7 @@ passport.deserializeUser(function(id, done){
 passport.use(new Googlestrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    callbackURL: "https://secrets-hjhd.onrender.com/auth/google/secrets",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
     function (accessToken, refreshToken, profile, cb) {
@@ -202,7 +204,9 @@ app.post("/login", function (req, res) {
     });
 });
 
+const port = process.env.PORT || 3000
+
 //listen for client on port 3000
-app.listen(3000, function () {
-    console.log("Server started on port 3000.");
+app.listen(port, function () {
+    console.log("Server started on port: ", port);
 });
