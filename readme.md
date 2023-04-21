@@ -9,7 +9,7 @@
 
 ## Description
 
-### Daily Journal Blog Website
+### Secrets website
 
 <p>A website where anyone can post their secrets anonymously.
 </p>
